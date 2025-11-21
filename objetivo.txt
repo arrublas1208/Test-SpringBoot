@@ -1,0 +1,117 @@
+La empresa LogiTrack S.A. administra varias bodegas distribuidas en distintas ciudades, encargadas de almacenar productos y gestionar movimientos de inventario (entradas, salidas, y transferencias).
+
+Hasta ahora, el control de inventarios y auditorías se hacía manualmente en hojas de cálculo, sin trazabilidad ni control de accesos.
+
+La dirección general busca implementar un sistema backend centralizado en Spring Boot, que permita:
+
+Controlar todos los movimientos entre bodegas.
+Registrar automáticamente los cambios (auditorías).
+Proteger la información con autenticación JWT.
+Ofrecer endpoints REST documentados y seguros.
+
+
+Objetivo General
+Desarrollar un sistema de gestión y auditoría de bodegas que permita registrar transacciones de inventario y generar reportes auditables de los cambios realizados por cada usuario.
+
+
+Requisitos Funcionales:
+
+
+1. Gestión de Bodegas
+Registrar, consultar, actualizar y eliminar bodegas.
+Campos: id, nombre, ubicacion, capacidad, encargado.
+2. Gestión de Productos
+CRUD completo de productos.
+Campos: id, nombre, categoria, stock, precio.
+
+
+3. Movimientos de Inventario
+Registrar entradas, salidas y transferencias entre bodegas.
+Cada movimiento debe almacenar:
+Fecha, tipo de movimiento (enum: ENTRADA, SALIDA, TRANSFERENCIA),
+Usuario responsable (empleado logueado),
+Bodega origen/destino,
+Productos y cantidades.
+
+
+4. Auditoría de Cambios
+Crear una entidad Auditoria para registrar:
+Tipo de operación (INSERT, UPDATE, DELETE),
+Fecha y hora,
+Usuario que realizó la acción,
+Entidad afectada y valores anteriores/nuevos.
+Implementar auditoría automática mediante:
+Listeners de JPA (EntityListeners) o
+Aspecto con anotaciones personalizadas (opcional).
+
+
+5. Autenticación y Seguridad
+Implementar seguridad con Spring Security + JWT:
+Endpoints /auth/login y /auth/register.
+Rutas seguras para /bodegas, /productos, /movimientos.
+Rol de usuario (ADMIN / EMPLEADO).
+
+
+6. Consultas Avanzadas y Reportes
+Endpoints con filtros:
+Productos con stock bajo (< 10 unidades).
+Movimientos por rango de fechas (BETWEEN).
+Auditorías por usuario o por tipo de operación.
+Reporte REST de resumen general (JSON): stock total por bodega y productos más movidos.
+
+
+7. Documentación
+Documentar toda la API con Swagger/OpenAPI 3.
+Probar los endpoints protegidos (token JWT incluido).
+
+
+8. Excepciones y Validaciones
+Manejo global de errores con @ControllerAdvice.
+Validaciones con anotaciones @NotNull, @Size, @Min, etc.
+Respuestas JSON personalizadas para errores (400, 401, 404, 500).
+
+
+9. Despliegue:
+Configurar base de datos MySQL en application.properties.
+Incluir scripts SQL (schema.sql, data.sql).
+Ejecutar con Tomcat embebido o externo.
+Frontend básico en HTML/CSS/JS para probar el login y las consultas principales.
+
+
+Estructura sugerida del Proyecto
+
+src/
+
+ ├─ controller/
+
+ ├─ service/
+
+ ├─ repository/
+
+ ├─ model/
+
+ ├─ config/
+
+ ├─ security/
+
+ └─ exception/
+
+
+
+Resultado esperado
+
+Entregables
+
+Código fuente completo del backend en Spring Boot.
+Scripts SQL (schema.sql y data.sql).
+Documentación Swagger.
+README con:
+Descripción del proyecto.
+Instrucciones de instalación y ejecución.
+Ejemplos de endpoints.
+Capturas de Swagger y pruebas.
+Carpeta frontend/ con HTML/CSS/JS que consuma los endpoints.
+Documento explicativo (PDF o Markdown) con:
+Diagrama de clases.
+Descripción de arquitectura.
+Ejemplo de token JWT y uso.
